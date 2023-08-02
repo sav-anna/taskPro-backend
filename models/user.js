@@ -59,9 +59,14 @@ const loginSchema = Joi.object({
   password: Joi.string().pattern(passwordRegexp).min(8).max(64).required(),
 });
 
+const updateTheme = Joi.object({
+  theme: Joi.string().valueOf("Dark", "Light", "Violet").required(),
+});
+
 const schemas = {
   registerSchema,
   loginSchema,
+  updateTheme,
 };
 
 const User = model("user", userSchema);

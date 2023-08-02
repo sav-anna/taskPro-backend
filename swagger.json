@@ -26,7 +26,7 @@
         "tags": ["Auth"],
         "summary": "Create user",
         "description": "Created new user object",
-        "operationId": "createUser",
+        "parameters": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -190,7 +190,7 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "UserName"
+            "example": "Username"
           },
           "email": {
             "type": "string",
@@ -198,7 +198,7 @@
           },
           "password": {
             "type": "string",
-            "example": "12345"
+            "example": "123456"
           }
         }
       },

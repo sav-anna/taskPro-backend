@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "TaskPro API docs",
-    "description": "This is the documentation of the TaskPro API backend, which is developed for the TaskPro web application.\n\n_The TaskPro backend API is built on Node.js (version 12 or higher) using the Express.js, API and Mongoose, Cloudinary to interact with the MongoDB database._",
+    "description": "This is the documentation of the TaskPro API backend, which is developed for the TaskPro web application.\n\nThe TaskPro backend API is built on Node.js (version 12 or higher) using the Express.js, API and Mongoose, Cloudinary to interact with the MongoDB database.",
     "version": "1.0.0"
   },
   "servers": [
@@ -289,6 +289,10 @@
       "UserResponse": {
         "type": "object",
         "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64cc2a7ce27e1e859f7c887b"
+          },
           "name": {
             "type": "string",
             "example": "Username"

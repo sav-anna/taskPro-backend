@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://taskpro-m75b.onrender.com"
+      "url": "https://taskpro-m75b.onrender.com/api"
     }
   ],
   "tags": [

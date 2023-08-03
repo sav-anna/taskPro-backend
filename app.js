@@ -17,7 +17,7 @@ app.use(express.static("public"));
 
 app.use("/api/auth", authRouter);
 
-app.use((req, res) => {
+app.use((_, res) => {
   res.status(404).json({ message: "Not found" });
 });
 

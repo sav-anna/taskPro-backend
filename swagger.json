@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "TaskPro API docs",
-    "description": "This is the documentation of the TaskPro API backend, which is developed for the TaskPro web application.\n\n_The TaskPro backend API is built on Node.js (version 12 or higher) using the Express.js, API and Mongoose to interact with the MongoDB database._",
+    "description": "This is the documentation of the TaskPro API backend, which is developed for the TaskPro web application.\n\n_The TaskPro backend API is built on Node.js (version 12 or higher) using the Express.js, API and Mongoose, Cloudinary to interact with the MongoDB database._",
     "version": "1.0.0"
   },
   "servers": [
@@ -23,7 +23,9 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Create user",
         "description": "Created new user object",
         "parameters": [],
@@ -43,16 +45,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "User creation error"
+            "description": "Bad Request"
           },
           "409": {
-            "description": "Conflict"
+            "description": "Email already in use"
           },
           "500": {
             "description": "Server error"
@@ -62,7 +64,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logs user into the system",
         "description": "",
         "operationId": "loginUser",
@@ -79,30 +83,29 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "User is logged in successful"
+            "description": "User is logged in successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLoginResponse"
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Loggin error"
+          "401": {
+            "description": "Email or password invalid"
           }
         }
       }
     },
     "/auth/logout": {
       "post": {
-        "tags": ["Auth"],
-        "summary": "Logs out current logged in user session",
-        "description": "",
-        "parameters": [
-          {
-            "in": "header",
-            "required": true,
-            "name": "Authorization",
-            "description": "Token of the current user.",
-            "schema": {
-              "type": "string"
-            }
-          }
+        "tags": [
+          "Auth"
         ],
+        "summary": "Logs out current logged in user session",
+        "description": "The current user must have a token",
+        "parameters": [],
         "security": [
           {
             "Bearer": []
@@ -110,10 +113,10 @@
         ],
         "responses": {
           "200": {
-            "description": "The user is logged out"
+            "description": "Logout success"
           },
           "401": {
-            "description": "Missing header with authorization token"
+            "description": "Not authorized"
           },
           "500": {
             "description": "Server error"
@@ -123,61 +126,137 @@
     },
     "/auth/current": {
       "get": {
-        "tags": ["Auth"],
-        "summary": "Get information about the current user",
-        "parameters": [
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get some information about the current user",
+        "parameters": [],
+        "security": [
           {
-            "in": "header",
-            "required": true,
-            "name": "Authorization",
-            "description": "The token issued to the current user.",
-            "schema": {
-              "type": "string"
-            }
+            "Bearer": []
           }
         ],
         "responses": {
           "200": {
-            "description": "Information found about user"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Missing header with authorization token"
+            "description": "Not authorized"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/auth/{user}": {
+    "/auth/{userId}": {
       "put": {
-        "tags": ["Auth"],
-        "summary": "Update profile user",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Update profile user (name or/and password or/and email or/and avatar)",
         "operationId": "getUserById",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [
           {
-            "name": "user",
+            "name": "userId",
             "in": "path",
             "required": true,
-            "description": "Token of the current user.",
+            "description": "Id of the current user",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "description": "form-data",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "User successful update",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserUpdateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/auth": {
+      "patch": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Update TaskPro Web application theme",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Theme"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Theme successful update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Theme"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid username supplied"
+            "description": "theme\\\" is required"
+          },
+          "401": {
+            "description": "Not authorized"
           },
           "404": {
-            "description": "User not found"
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -186,6 +265,105 @@
   "components": {
     "schemas": {
       "UserRegister": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Username"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678"
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Username"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          }
+        }
+      },
+      "UserLogin": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678"
+          }
+        }
+      },
+      "UserLoginResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "64ca36b5d2a58e01f84482ce"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Y2JkZGU2ZjA4NDViZDA2ZWMzNWIwNCIsImlhdCI6MTY5MTA4ODkxOSwiZXhwIjoxNjkxMTcxNzE5fQ."
+          },
+          "theme": {
+            "type": "string",
+            "example": "Dark"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "avatarURL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Username"
+          }
+        }
+      },
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Username"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "UserUpdateResponse": {
         "type": "object",
         "properties": {
           "name": {
@@ -198,48 +376,20 @@
           },
           "password": {
             "type": "string",
-            "example": "123456"
-          }
-        }
-      },
-      "UserLogin": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "example": "user@email.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "12345"
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string",
-            "example": "64ca36b5d2a58e01f84482ce"
-          },
-          "name": {
-            "type": "string",
-            "example": "UserName"
-          },
-          "email": {
-            "type": "string",
-            "example": "user@email.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "12345"
-          },
-          "theme": {
-            "type": "string",
-            "example": "dark"
+            "example": "12345678"
           },
           "avatar": {
-            "type": "string"
+            "type": "string",
+            "example": "https://cloudinary.com/..."
+          }
+        }
+      },
+      "Theme": {
+        "type": "object",
+        "properties": {
+          "theme": {
+            "type": "string",
+            "example": "Violet"
           }
         }
       }

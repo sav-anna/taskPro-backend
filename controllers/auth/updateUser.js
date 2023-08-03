@@ -6,25 +6,25 @@ const { HttpError } = require("../../helpers");
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, password, email } = req.body;
+    const { name="", password="", email="" } = req.body;
     const user = await User.findById(id);
     if (!user) {
         throw HttpError(404, "Not found");
     }
  
-    if (name) {
+    if (name!=="") {
       user.name = name;
     }
-    if (password) {
+    if (password!=="") {
       const hashPassword = await bcrypt.hash(password, 10);
       user.password = hashPassword;
     }
-    if (email) {
+    if (email!=="") {
         user.email = email;
     }
     await user.save();
 
-    res.status(200).json({"name":name, "email":email});
+    res.status(200).json({"name":user.name, "email":user.email});
   
 };
 

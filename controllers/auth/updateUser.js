@@ -49,11 +49,11 @@ const updateUser = async (req, res) => {
   res.json({
     status: "Successfully updated",
     code: 200,
-    id: user._id,
+    _id: user._id,
     name: user.name,
     email: user.email,
     theme: user.theme,
-    avatarURL,   
+    avatarURL,
   });
 };
 

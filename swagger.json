@@ -12,6 +12,9 @@
   ],
   "tags": [
     {
+      "name": "Help"
+    },
+    {
       "name": "Auth",
       "description": "Authorization endpoints"
     },
@@ -21,6 +24,42 @@
     }
   ],
   "paths": {
+    "/help": {
+      "post": {
+        "tags": [
+          "Help"
+        ],
+        "summary": "Need help",
+        "description": "Sending an email asking for help to technical support. Only authorized user can send",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Help"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Message successfully sent"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -264,6 +303,23 @@
   },
   "components": {
     "schemas": {
+      "Help": {
+        "type": "object",
+        "required": [
+          "email",
+          "message"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          },
+          "message": {
+            "type": "string",
+            "example": "I need help with boards and tasks"
+          }
+        }
+      },
       "UserRegister": {
         "type": "object",
         "required": [

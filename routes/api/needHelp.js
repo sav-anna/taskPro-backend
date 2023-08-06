@@ -8,7 +8,7 @@ router.post(
   "/",
   authenticate,
   validateBody(schemas.addSchema),
-  ctrl.sendNeedHelpMail
+  ctrl.createNeedHelpMail
 );
 
 module.exports = router;

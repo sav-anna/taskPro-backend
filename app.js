@@ -8,7 +8,7 @@ require("dotenv").config();
 
 const authRouter = require("./routes/api/auth");
 
-const HelpRouter = require("./routes/api/needHelp");
+const helpRouter = require("./routes/api/needHelp");
 
 const boardRouter = require("./routes/api/boards");
 
@@ -23,7 +23,7 @@ app.use(express.static("public"));
 
 app.use("/api/auth", authRouter);
 
-app.use("/api/help", HelpRouter);
+app.use("/api/help", helpRouter);
 
 app.use("/api/boards", boardRouter);
 

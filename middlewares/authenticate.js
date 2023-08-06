@@ -9,21 +9,27 @@ const { SECRET_KEY } = process.env;
 const authenticate = async (req, res, next) => {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
+  
   if (bearer !== "Bearer" || !token) {
     next(HttpError(401));
   }
-
+console.log("token: ", token);
   try {
-    const { id } = jwt.verify(token, SECRET_KEY);
-    const user = await User.findById(id);
-    if (!user || !user.token || user.token !== token) {
-      next(HttpError(401));
+    // const { id } = jwt.verify(token, SECRET_KEY);
+    // const user = await User.findById(id);
+    // if (!user || !user.token || user.token !== token) {
+    //   next(HttpError(401));
+    const payload = jwt.verify(token, JWT_SECRET)
+    if (payload.type !== 'access') {
+      return res.status(401).json({ message: 'Invalid token' })
     }
+    const user = await User.findById(payload.userId)
     req.user = user;
-    next();
+       
   } catch {
     next(HttpError(401));
   }
+  next();
 };
 
 module.exports = authenticate;

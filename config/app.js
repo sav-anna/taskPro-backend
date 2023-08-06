@@ -1,12 +1,14 @@
-module.exports ={
-    jwt:{
-        access:{
-            type:"access",
-            expiresIn:"23h"
+module.exports = {
+    jwt: {
+      tokens: {
+        access: {
+          type: 'access',
+          expiresIn: '1h',
         },
         refresh: {
-            type:"refresh",
-            expiresIn:"28h",
-        }
-    }
-};
+          type: 'refresh',
+          expiresIn: '2h',
+        },
+      },
+    },
+  };

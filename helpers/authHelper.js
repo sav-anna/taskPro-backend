@@ -59,4 +59,4 @@ const authHelper = {
   updateTokens,
 }
 
-module.exports = authHelper
+module.exports = authHelper;

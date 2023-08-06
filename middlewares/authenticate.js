@@ -13,16 +13,17 @@ const authenticate = async (req, res, next) => {
   if (bearer !== "Bearer" || !token) {
     next(HttpError(401));
   }
-console.log("token: ", token);
+
   try {
     // const { id } = jwt.verify(token, SECRET_KEY);
     // const user = await User.findById(id);
     // if (!user || !user.token || user.token !== token) {
     //   next(HttpError(401));
-    const payload = jwt.verify(token, JWT_SECRET)
+    const payload = jwt.verify(token, SECRET_KEY)
     if (payload.type !== 'access') {
       return res.status(401).json({ message: 'Invalid token' })
     }
+    console.log("payload.userId: ", payload.userId);
     const user = await User.findById(payload.userId)
     req.user = user;
        

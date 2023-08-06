@@ -1,5 +1,5 @@
 const express = require("express");
-const { authenticate, upload } = require("../../middlewares");
+const { authenticate } = require("../../middlewares");
 const ctrl = require("../../controllers/board");
 
 const router = express.Router();

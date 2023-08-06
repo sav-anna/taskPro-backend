@@ -35,7 +35,7 @@ const updateUser = async (req, res) => {
     avatarURL = req.file.path;
   }
 
-  const result = await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     _id,
     {
       name: user.name,
@@ -49,8 +49,11 @@ const updateUser = async (req, res) => {
   res.json({
     status: "Successfully updated",
     code: 200,
-
-    user: result,
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    theme: user.theme,
+    avatarURL: user.avatarURL,   
   });
 };
 

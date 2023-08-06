@@ -53,7 +53,7 @@ const updateUser = async (req, res) => {
     name: user.name,
     email: user.email,
     theme: user.theme,
-    avatarURL: user.avatarURL,
+    avatarURL,
   });
 };
 

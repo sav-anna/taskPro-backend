@@ -4,18 +4,17 @@ const { HttpError } = require("../../helpers");
 
 const getBoardById = async (req, res) => {
   const { boardId } = req.params;
-  const board = await Board.findById({ boardId });
+  const board = await Board.findById(boardId);
 
   if (!board) throw HttpError(404);
 
   const columns = await Column.find({ parentBoard: board._id });
+  let columnsWithCards = [];
 
   if (columns.length > 0) {
-    const columnsWithCards = await Column.aggregate([
+    columnsWithCards = await Column.aggregate([
       {
-        $match: {
-          parentBoard: boardId,
-        },
+        $match: { $or: columns },
       },
       {
         $lookup: {
@@ -26,16 +25,11 @@ const getBoardById = async (req, res) => {
         },
       },
     ]);
-
-    res.json({
-      dashboard,
-      columns: columnsWithCards,
-    });
   }
 
   res.json({
-    dashboard,
-    columns: [],
+    board,
+    columns: columnsWithCards,
   });
 };
 

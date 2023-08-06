@@ -47,7 +47,7 @@ const updateUser = async (req, res) => {
   );
 
   res.json({
-    status: "OK",
+    status: "Successfully updated",
     code: 200,
 
     user: result,

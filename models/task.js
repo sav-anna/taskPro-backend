@@ -34,4 +34,4 @@ taskSchema.post("save", handleMongooseError);
 
 const Task = model("task", taskSchema);
 
-module.exports = Task;
+module.exports = { Task };

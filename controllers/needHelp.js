@@ -1,5 +1,5 @@
 const { needHelpMail } = require("../models/needHelp");
-const { ctrlWrapper, sendNeedHelpMail } = require("../helpers/needHelp");
+const { ctrlWrapper, sendNeedHelpMail } = require("../helpers");
 
 const createNeedHelpMail = async (req, res) => {
   const { email, message } = req.body;

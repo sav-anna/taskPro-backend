@@ -27,7 +27,7 @@ const schemas = {
 
 needHelpSchema.post("save", handleMongooseError);
 
-const needHelpMail = model("support", needHelpSchema);
+const needHelpMail = model("needHelp", needHelpSchema);
 
 module.exports = {
   needHelpMail,

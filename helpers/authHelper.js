@@ -48,4 +48,4 @@ generateRefreshToken,
 replaceDbRefreshToken,
 updateTokens
 };
-module.exports =  authHelper;
+module.exports = authHelper;

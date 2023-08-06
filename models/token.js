@@ -11,11 +11,11 @@ const tokenSchema = new Schema(
   {
     tokenId: {
       type: String,
-      required: true,
+    //   required: true,
     },
     userId: {
       type: String,
-      required: true,
+    //   required: true,
     },
     
   },

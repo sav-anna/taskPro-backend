@@ -29,10 +29,10 @@ const userSchema = new Schema(
       maxLength: 64,
       required: [true, "Set password for user"],
     },
-    token: {
-      type: String,
-      default: "",
-    },
+    // token: {
+    //   type: String,
+    //   default: "",
+    // },
     avatarURL: {
       type: String,
       default: "",

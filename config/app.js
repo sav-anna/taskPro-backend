@@ -5,7 +5,7 @@ module.exports ={
             expiresIn:"23h"
         },
         refresh: {
-            type:"refesh",
+            type:"refresh",
             expiresIn:"28h",
         }
     }

@@ -21,6 +21,14 @@
     {
       "name": "Boards",
       "description": "Boards endpoints"
+    },
+    {
+      "name": "Columns",
+      "description": "Columns endpoints"
+    },
+    {
+      "name": "Tasks",
+      "description": "Tasks endpoints"
     }
   ],
   "paths": {
@@ -406,7 +414,7 @@
         },
         "responses": {
           "201": {
-            "description": "success",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -503,10 +511,229 @@
         ],
         "responses": {
           "200": {
-            "description": "success"
+            "description": "Success"
           },
           "401": {
             "description": "Not authorized"
+          }
+        }
+      }
+    },
+    "/columns/": {
+      "post": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Add column",
+        "description": "The current user must have a token.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddColumn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColumnResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Column validation failed. Path parentBoard is required"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/columns/{columnId}": {
+      "get": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Get column by id",
+        "description": "The current user must have a token.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the current column",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColumnResponseById"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Column validation failed. Path parentBoard is required"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/columns/{columnId}/": {
+      "put": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Update board",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the column",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateColumn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColumnResponseById"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Column not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/columns/{_id}": {
+      "delete": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Delete column",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "description": "Id of the column",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Column not found"
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Add task",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "description": "The current user must have a token.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -791,6 +1018,149 @@
                 }
               }
             }
+          }
+        }
+      },
+      "AddColumn": {
+        "type": "object",
+        "required": [
+          "parentBoard"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "New Column"
+          },
+          "parentBoard": {
+            "type": "object",
+            "example": "boardId"
+          }
+        }
+      },
+      "ColumnResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "New Column"
+          },
+          "parentBoard": {
+            "type": "string",
+            "example": "64cff474d317457be0a3fa94"
+          },
+          "taskOrder": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "_id": {
+                  "type": "object",
+                  "example": "64cfc2efca899b99cc4b3420"
+                }
+              }
+            }
+          },
+          "_id": {
+            "type": "string",
+            "example": "64d13c39a01425f5d9c312ab"
+          }
+        }
+      },
+      "ColumnResponseById": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64d13c39a01425f5d9c312ab"
+          },
+          "title": {
+            "type": "string",
+            "example": "New Column"
+          },
+          "parentBoard": {
+            "type": "string",
+            "example": "64cff474d317457be0a3fa94"
+          },
+          "taskOrder": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "_id": {
+                  "type": "object",
+                  "example": "64cfc2efca899b99cc4b3420"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdateColumn": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Work column"
+          }
+        }
+      },
+      "AddTask": {
+        "type": "object",
+        "required": [
+          "title",
+          "parentColumn"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "New Task"
+          },
+          "description": {
+            "type": "string",
+            "example": ""
+          },
+          "priority": {
+            "type": "string",
+            "example": "without"
+          },
+          "deadline": {
+            "type": "string",
+            "example": null
+          },
+          "parentColumn": {
+            "type": "string",
+            "example": "64d13c39a01425f5d9c312ab"
+          }
+        }
+      },
+      "TaskResponse": {
+        "type": "object",
+        "required": [
+          "title",
+          "parentColumn"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "New Task"
+          },
+          "description": {
+            "type": "string",
+            "example": ""
+          },
+          "priority": {
+            "type": "string",
+            "example": "without"
+          },
+          "deadline": {
+            "type": "string",
+            "example": null
+          },
+          "parentColumn": {
+            "type": "string",
+            "example": "64d13c39a01425f5d9c312ab"
+          },
+          "_id": {
+            "type": "string",
+            "example": "64d14760a01425f5d9c3135d"
           }
         }
       }

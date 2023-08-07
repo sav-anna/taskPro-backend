@@ -18,7 +18,7 @@ const removeBoard = async (req, res) => {
   }
 
   res.json({
-    message: `Board with id: ${boardId} has been successfully deleted`,
+    message: `Board ${boardId} successfully deleted`,
   });
 };
 

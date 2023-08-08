@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
+const Joi = require("joi");
 
 const taskSchema = new Schema(
   {
@@ -18,7 +19,8 @@ const taskSchema = new Schema(
       default: "without",
     },
     deadline: {
-      type: Date,
+      type: String,
+      match: /^\d{2}-\d{2}-\d{4}$/,
       default: null,
     },
     parentColumn: {
@@ -32,6 +34,31 @@ const taskSchema = new Schema(
 
 taskSchema.post("save", handleMongooseError);
 
+const addTaskSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string(),
+  priority: Joi.string().valueOf("without", "low", "medium", "high"),
+  deadline: Joi.string().pattern(/^\d{2}-\d{2}-\d{4}$/),
+  parentColumn: Joi.string().required(),
+});
+
+const editTaskSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string(),
+  priority: Joi.string().valueOf("without", "low", "medium", "high"),
+  deadline: Joi.string().pattern(/^\d{2}-\d{2}-\d{4}$/),
+});
+
+const updateParentColumnSchema = Joi.object({
+  parentColumn: Joi.string().required(),
+});
+
+const schemas = {
+  addTaskSchema,
+  editTaskSchema,
+  updateParentColumnSchema,
+};
+
 const Task = model("task", taskSchema);
 
-module.exports = { Task };
+module.exports = { Task, schemas };

@@ -1,4 +1,6 @@
 const { Column } = require("../../models/column");
+const { Board } = require("../../models/board");
+const { Task } = require("../../models/task");
 
 const { HttpError } = require("../../helpers");
 
@@ -28,7 +30,7 @@ const removeColumn = async (req, res) => {
     await Task.deleteMany({ parentColumn });
   }
 
-  res.status(204).json({ message: `Column ${columnId} successfully deleted` });
+  res.json({ message: `Column ${columnId} successfully deleted` });
 };
 
 module.exports = removeColumn;

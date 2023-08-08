@@ -8,6 +8,12 @@ require("dotenv").config();
 
 const authRouter = require("./routes/api/auth");
 
+const helpRouter = require("./routes/api/needHelp");
+
+const boardRouter = require("./routes/api/boards");
+const columnRouter = require("./routes/api/columns");
+const taskRouter = require("./routes/api/tasks");
+
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -18,6 +24,13 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/api/auth", authRouter);
+
+app.use("/api/help", helpRouter);
+
+app.use("/api/boards", boardRouter);
+app.use("/api/columns", columnRouter);
+app.use("/api/tasks", taskRouter);
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {

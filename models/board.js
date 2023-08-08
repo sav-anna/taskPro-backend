@@ -10,16 +10,16 @@ const boardSchema = new Schema(
     icon: {
       type: String,
       enum: [
-        "icon-Project",
-        "icon-star-04",
-        "icon-loading-03",
-        "icon-puzzle-piece-02",
+        "icon-project",
+        "icon-star",
+        "icon-loading",
+        "icon-puzzle-piece",
         "icon-container",
-        "icon-lightning-02",
+        "icon-lightning",
         "icon-colors",
-        "icon-hexagon-01",
+        "icon-hexagon",
       ],
-      default: "icon-Project",
+      default: "icon-project",
     },
     background: { type: String, default: "" },
     columnOrder: { type: Array, default: [] },
@@ -36,4 +36,4 @@ boardSchema.post("save", handleMongooseError);
 
 const Board = model("board", boardSchema);
 
-module.exports = Board;
+module.exports = { Board };

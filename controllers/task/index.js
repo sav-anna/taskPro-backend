@@ -1,13 +1,15 @@
 const { ctrlWrapper } = require("../../helpers");
 
+const getTaskById = require("./getTaskById");
 const addTask = require("./addTask");
-const removeTask = require("./removeTask");
-const getTasks = require("./getTasks");
 const updateTask = require("./updateTask");
+const updateTaskOwner = require("./updateTaskOwner");
+const removeTask = require("./removeTask");
 
 module.exports = {
+  getTaskById: ctrlWrapper(getTaskById),
   addTask: ctrlWrapper(addTask),
-  removeTask: ctrlWrapper(removeTask),
-  getTasks: ctrlWrapper(getTasks),
   updateTask: ctrlWrapper(updateTask),
+  updateTaskOwner: ctrlWrapper(updateTaskOwner),
+  removeTask: ctrlWrapper(removeTask),
 };

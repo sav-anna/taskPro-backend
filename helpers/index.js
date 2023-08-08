@@ -4,4 +4,4 @@ const ctrlWrapper = require("./ctrlWrapper");
 const needHelp = require("./needHelp");
 const authHelper = require("./authHelper");
 
-module.exports = { HttpError, ctrlWrapper,  needHelp, authHelper };
+module.exports = { HttpError, ctrlWrapper, handleMongooseError, needHelp };

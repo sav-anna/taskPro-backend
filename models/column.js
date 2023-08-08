@@ -21,4 +21,4 @@ columnSchema.post("save", handleMongooseError);
 
 const Column = model("column", columnSchema);
 
-module.exports = Column;
+module.exports = { Column };

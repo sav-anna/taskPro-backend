@@ -12,15 +12,54 @@
   ],
   "tags": [
     {
+      "name": "Help"
+    },
+    {
       "name": "Auth",
       "description": "Authorization endpoints"
     },
     {
-      "name": "Board",
+      "name": "Boards",
       "description": "Boards endpoints"
     }
   ],
   "paths": {
+    "/help": {
+      "post": {
+        "tags": [
+          "Help"
+        ],
+        "summary": "Need help",
+        "description": "Sending an email asking for help to technical support. Only authorized user can send",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Help"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Message successfully sent"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -156,7 +195,7 @@
         }
       }
     },
-    "/auth/{userId}": {
+    "/auth/{_id}": {
       "put": {
         "tags": [
           "Auth"
@@ -170,7 +209,7 @@
         ],
         "parameters": [
           {
-            "name": "userId",
+            "name": "_id",
             "in": "path",
             "required": true,
             "description": "Id of the current user",
@@ -181,7 +220,7 @@
         ],
         "requestBody": {
           "description": "form-data",
-          "required": true,
+          "required": false,
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -260,10 +299,238 @@
           }
         }
       }
+    },
+    "/boards": {
+      "get": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Get all boards",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "description": "The current user must have a token.",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Boards"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/boards/{boardId}": {
+      "get": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Get one board by id",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the board",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBoard"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/boards/": {
+      "post": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Add board",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "description": "The current user must have a token.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddBoard"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BoardResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/boards/{boardId}/": {
+      "put": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Update board",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the board",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddBoard"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBoardResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/boards/{_id}": {
+      "delete": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Delete board",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "description": "Id of the board",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "401": {
+            "description": "Not authorized"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "Help": {
+        "type": "object",
+        "required": [
+          "email",
+          "message"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          },
+          "message": {
+            "type": "string",
+            "example": "I need help with boards and tasks"
+          }
+        }
+      },
       "UserRegister": {
         "type": "object",
         "required": [
@@ -361,7 +628,7 @@
             "type": "string",
             "example": "12345678"
           },
-          "avatar": {
+          "avatarURL": {
             "type": "string",
             "format": "binary"
           }
@@ -370,6 +637,10 @@
       "UserUpdateResponse": {
         "type": "object",
         "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64cfbbf026d09de4371c56c7"
+          },
           "name": {
             "type": "string",
             "example": "Username"
@@ -378,13 +649,13 @@
             "type": "string",
             "example": "user@email.com"
           },
-          "password": {
+          "theme": {
             "type": "string",
-            "example": "12345678"
+            "example": "dark"
           },
-          "avatar": {
+          "avatarURL": {
             "type": "string",
-            "example": "https://cloudinary.com/..."
+            "example": "https://res.cloudinary.com/taskpro/image/upload/..."
           }
         }
       },
@@ -393,7 +664,133 @@
         "properties": {
           "theme": {
             "type": "string",
-            "example": "Violet"
+            "example": "violet"
+          }
+        }
+      },
+      "Boards": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "field": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "boards": [
+            {
+              "_id": "111a1ea1113bc1ba1a1c896c",
+              "title": "New Board",
+              "icon": "icon-star",
+              "background": ""
+            },
+            {
+              "_id": "222a0ea22b2bc2ba2c2d899c",
+              "title": "Work Board",
+              "icon": "icon-project",
+              "background": "imageURL"
+            }
+          ]
+        }
+      },
+      "GetBoard": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "111a1ea1113bc1ba1a1c896c"
+          },
+          "title": {
+            "type": "string",
+            "example": "New Board"
+          },
+          "icon": {
+            "type": "string",
+            "example": "icon-star"
+          },
+          "background": {
+            "type": "string",
+            "example": "imageURL"
+          }
+        }
+      },
+      "AddBoard": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "New Board"
+          },
+          "icon": {
+            "type": "string",
+            "example": "icon-star"
+          },
+          "background": {
+            "type": "string",
+            "example": "icon-star"
+          }
+        }
+      },
+      "BoardResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "New Board"
+          },
+          "icon": {
+            "type": "string",
+            "example": "icon-star"
+          },
+          "background": {
+            "type": "string",
+            "example": "icon-star"
+          },
+          "_id": {
+            "type": "string",
+            "example": "64cff474d317457be0a3fa94"
+          },
+          "owner": {
+            "type": "string",
+            "example": "64cfc2efca5e9b96cc4b3420"
+          }
+        }
+      },
+      "UpdateBoardResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "New Board"
+          },
+          "icon": {
+            "type": "string",
+            "example": "icon-star"
+          },
+          "background": {
+            "type": "string",
+            "example": "icon-star"
+          },
+          "_id": {
+            "type": "string",
+            "example": "64cff474d317457be0a3fa94"
+          },
+          "owner": {
+            "type": "string",
+            "example": "64cfc2efca5e9b96cc4b3420"
+          },
+          "columnOrder": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }

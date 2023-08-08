@@ -2,12 +2,12 @@ const { ctrlWrapper } = require("../../helpers");
 
 const addColumn = require("./addColumn");
 const removeColumn = require("./removeColumn");
-const getColumns = require("./getColumns");
+const getColumnById = require("./getColumnById");
 const updateColumn = require("./updateColumn");
 
 module.exports = {
   addColumn: ctrlWrapper(addColumn),
   removeColumn: ctrlWrapper(removeColumn),
-  getColumns: ctrlWrapper(getColumns),
+  getColumnById: ctrlWrapper(getColumnById),
   updateColumn: ctrlWrapper(updateColumn),
 };

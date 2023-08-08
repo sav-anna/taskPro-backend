@@ -15,6 +15,7 @@ const storage = new CloudinaryStorage({
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
+  
 });
 
 const uploadCloud = multer({ storage });

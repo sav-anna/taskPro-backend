@@ -39,8 +39,8 @@ const userSchema = new Schema(
     },
     theme: {
       type: String,
-      enum: ["Dark", "Light", "Violet"],
-      default: "Dark",
+      enum: ["dark", "light", "violet"],
+      default: "violet",
     },
   },
   { versionKey: false, timestamps: true }
@@ -57,6 +57,7 @@ const updateUserSchema = Joi.object({
   name: Joi.string().pattern(nameRegexp).min(2).max(32),
   email: Joi.string().pattern(emailRegexp),
   password: Joi.string().pattern(passwordRegexp).min(8).max(64),
+  avatarUrl: Joi.string()
 });
 
 const loginSchema = Joi.object({

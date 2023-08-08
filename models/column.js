@@ -6,13 +6,13 @@ const columnSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Set title for Column"],
       // default: "New Column",
     },
     parentBoard: {
       type: Schema.Types.ObjectId,
       ref: "board",
-      required: true,
+      required: [true, "ParentBoard id is required"],
     },
     taskOrder: { type: Array, default: [] },
   },
@@ -22,13 +22,19 @@ const columnSchema = new Schema(
 columnSchema.post("save", handleMongooseError);
 
 const addColumnSchema = Joi.object({
-  title: Joi.string().required(),
-  parentBoard: Joi.string().required(),
+  title: Joi.string().required().messages({
+    "any.required": "Missing field title",
+  }),
+  parentBoard: Joi.string().required().messages({
+    "any.required": "Missing field parentBoard",
+  }),
   taskOrder: Joi.array(),
 });
 
 const editColumnSchema = Joi.object({
-  title: Joi.string().required(),
+  title: Joi.string().required().messages({
+    "any.required": "Missing field title",
+  }),
   taskOrder: Joi.array(),
 });
 

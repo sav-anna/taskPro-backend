@@ -24,6 +24,7 @@ const login = async (req, res) => {
     theme: user.theme,
     avatarURL: user.avatarURL,
     name: user.name,
+    email: user.email,
   });
 };
 

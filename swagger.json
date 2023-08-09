@@ -12,9 +12,6 @@
   ],
   "tags": [
     {
-      "name": "Help"
-    },
-    {
       "name": "Auth",
       "description": "Authorization endpoints"
     },
@@ -32,42 +29,6 @@
     }
   ],
   "paths": {
-    "/help": {
-      "post": {
-        "tags": [
-          "Help"
-        ],
-        "summary": "Need help",
-        "description": "Sending an email asking for help to technical support. Only authorized user can send",
-        "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Help"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Your mail successfully sent"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Server error"
-          }
-        }
-      }
-    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -203,7 +164,7 @@
         }
       }
     },
-    "/auth/{_id}": {
+    "/auth": {
       "put": {
         "tags": [
           "Auth"
@@ -215,17 +176,7 @@
             "Bearer": []
           }
         ],
-        "parameters": [
-          {
-            "name": "_id",
-            "in": "path",
-            "required": true,
-            "description": "Id of the current user",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "description": "form-data",
           "required": false,
@@ -260,7 +211,7 @@
         }
       }
     },
-    "/auth": {
+    "/auth/": {
       "patch": {
         "tags": [
           "Auth"
@@ -301,6 +252,42 @@
           },
           "404": {
             "description": "Not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/auth/help": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Need help",
+        "description": "Sending an email asking for help to technical support. Only authorized user can send",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Help"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Your mail successfully sent"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "Server error"

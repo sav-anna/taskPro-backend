@@ -23,7 +23,7 @@ const boardSchema = new Schema(
       ],
       default: "project",
     },
-    background: { type: String, default: "" },
+    background: { type: String, default: "0" },
     columnOrder: { type: Array, default: [] },
     owner: {
       type: Schema.Types.ObjectId,
@@ -56,7 +56,7 @@ const addBoardSchema = Joi.object({
       "any.only":
         'Can only be "project", "star", "loading", "puzzle-piece", "container", "lightning", "colors", "hexagon"',
     }),
-  background: Joi.string().allow(""),
+  background: Joi.string(),
   columnOrder: Joi.array(),
 });
 
@@ -80,7 +80,7 @@ const editBoardSchema = Joi.object({
       "any.only":
         'Can only be "project", "star", "loading", "puzzle-piece", "container", "lightning", "colors", "hexagon"',
     }),
-  background: Joi.string().allow(""),
+  background: Joi.string(),
   columnOrder: Joi.array(),
 });
 

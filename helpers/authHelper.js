@@ -39,8 +39,8 @@ const replaceDbRefreshToken = async (tokenId, userId) => {
   return result;
 };
 
-const updateTokens = async (userId) => {
-  const accessToken = generateAccessToken(userId);
+const updateTokens = async (userId, type) => {
+  const accessToken = generateAccessToken(userId, type);
   const refreshToken = generateRefreshToken();
   await replaceDbRefreshToken(refreshToken.id, userId);
 

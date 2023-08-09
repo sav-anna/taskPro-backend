@@ -26,13 +26,14 @@ const authenticate = async (req, res, next) => {
     const user = await User.findById(payload.userId)
     req.user = user;
        
-  } catch (error) {
+  }  catch (error) {
     if(error instanceof jwt.TokenExpiredError){
-        throw HttpError(400, "Expired token");
-    };
-     if (error instanceof jwt.JsonWebTokenError){
-        throw HttpError(400, "Invalid token");
-    };
+        next(HttpError(401, "Expired token"));
+    } else if (error instanceof jwt.JsonWebTokenError){
+        next(HttpError(401, "Invalid token"));
+    } else {
+      next(error);
+    }
   }
       next();
   };

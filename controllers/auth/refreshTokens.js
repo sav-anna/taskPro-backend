@@ -22,9 +22,13 @@ const refreshTokens = async (req,res) => {
         const newTokens = await authHelper.updateTokens(token.userId);
       return  res.status(200).json(newTokens);
 
-    } catch (error) {
-        throw HttpError(400, error.message);
-    }
+    }  catch (error) {
+        if (error.message === 'Expired token') {
+          res.status(401).json({ message: 'Refresh token expired' });
+        } else {
+          res.status(500).json({ message: 'Server error' });
+        }
+      }
 
 };
 module.exports = refreshTokens;

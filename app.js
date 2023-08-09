@@ -8,7 +8,7 @@ require("dotenv").config();
 
 const authRouter = require("./routes/api/auth");
 
-const helpRouter = require("./routes/api/needHelp");
+const helpRouter = require("./routes/api/help");
 
 const boardRouter = require("./routes/api/boards");
 const columnRouter = require("./routes/api/columns");

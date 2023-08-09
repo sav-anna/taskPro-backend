@@ -7,7 +7,7 @@ const taskSchema = new Schema(
     title: {
       type: String,
       default: "New Task",
-      required: true,
+      required: [true, "Set title for Task"],
     },
     description: {
       type: String,
@@ -26,7 +26,7 @@ const taskSchema = new Schema(
     parentColumn: {
       type: Schema.Types.ObjectId,
       ref: "column",
-      required: true,
+      required: [true, "Parent Column id is required"],
     },
   },
   { versionKey: false }
@@ -35,22 +35,34 @@ const taskSchema = new Schema(
 taskSchema.post("save", handleMongooseError);
 
 const addTaskSchema = Joi.object({
-  title: Joi.string().required(),
+  title: Joi.string().required().messages({
+    "any.required": "Missing field title",
+  }),
   description: Joi.string(),
-  priority: Joi.string().valueOf("without", "low", "medium", "high"),
+  priority: Joi.string().valid("without", "low", "medium", "high").messages({
+    "any.only": 'Can only be "without", "low", "medium", "high"',
+  }),
   deadline: Joi.string().pattern(/^\d{2}-\d{2}-\d{4}$/),
-  parentColumn: Joi.string().required(),
+  parentColumn: Joi.string().required().messages({
+    "any.required": "Missing field parentColumn",
+  }),
 });
 
 const editTaskSchema = Joi.object({
-  title: Joi.string().required(),
+  title: Joi.string().required().messages({
+    "any.required": "Missing field title",
+  }),
   description: Joi.string(),
-  priority: Joi.string().valueOf("without", "low", "medium", "high"),
+  priority: Joi.string().valid("without", "low", "medium", "high").messages({
+    "any.only": 'Can only be "without", "low", "medium", "high"',
+  }),
   deadline: Joi.string().pattern(/^\d{2}-\d{2}-\d{4}$/),
 });
 
 const updateParentColumnSchema = Joi.object({
-  parentColumn: Joi.string().required(),
+  parentColumn: Joi.string().required().messages({
+    "any.required": "Missing field parentColumn",
+  }),
 });
 
 const schemas = {

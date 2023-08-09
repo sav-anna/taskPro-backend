@@ -25,7 +25,7 @@ router.patch(
   ctrl.updateTheme
 );
 router.put(
-  "/:_id",
+  "/",
   authenticate,
   uploadCloud.single("avatarURL"),
   validateBody(schemas.updateUserSchema),

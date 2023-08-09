@@ -6,7 +6,7 @@ const boardSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Set title for Board"],
       // default: "New Board",
     },
     icon: {
@@ -23,7 +23,7 @@ const boardSchema = new Schema(
       ],
       default: "project",
     },
-    background: { type: String, default: "" },
+    background: { type: String, default: "0" },
     columnOrder: { type: Array, default: [] },
     owner: {
       type: Schema.Types.ObjectId,
@@ -37,9 +37,11 @@ const boardSchema = new Schema(
 boardSchema.post("save", handleMongooseError);
 
 const addBoardSchema = Joi.object({
-  title: Joi.string().required(),
+  title: Joi.string().required().messages({
+    "any.required": "Missing field title",
+  }),
   icon: Joi.string()
-    .valueOf(
+    .valid(
       "project",
       "star",
       "loading",
@@ -49,15 +51,21 @@ const addBoardSchema = Joi.object({
       "colors",
       "hexagon"
     )
-    .required(),
-  background: Joi.string().allow("").optional(),
+    .required()
+    .messages({
+      "any.only":
+        'Can only be "project", "star", "loading", "puzzle-piece", "container", "lightning", "colors", "hexagon"',
+    }),
+  background: Joi.string(),
   columnOrder: Joi.array(),
 });
 
 const editBoardSchema = Joi.object({
-  title: Joi.string().required(),
+  title: Joi.string().required().messages({
+    "any.required": "Missing field title",
+  }),
   icon: Joi.string()
-    .valueOf(
+    .valid(
       "project",
       "star",
       "loading",
@@ -67,8 +75,12 @@ const editBoardSchema = Joi.object({
       "colors",
       "hexagon"
     )
-    .required(),
-  background: Joi.string().allow("").optional(),
+    .required()
+    .messages({
+      "any.only":
+        'Can only be "project", "star", "loading", "puzzle-piece", "container", "lightning", "colors", "hexagon"',
+    }),
+  background: Joi.string(),
   columnOrder: Joi.array(),
 });
 

@@ -855,6 +855,71 @@
           }
         }
       }
+    },
+    "/tasks/{taskId}/owner/{columnId}": {
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Change the owner of the task",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the current task",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the current column",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "id of the column to which the task is moved",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "parentColumn": "64d13c39a01425f5d9c312ab"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Owner successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1092,7 +1157,7 @@
           },
           "background": {
             "type": "string",
-            "example": "star"
+            "example": 0
           },
           "columnOrder": {
             "type": "array",

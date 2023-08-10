@@ -1,14 +1,11 @@
 const { Board } = require("../../models/board");
 const { Column } = require("../../models/column");
-const { Background } = require("../../models/background");
 const { HttpError } = require("../../helpers");
 
 const getBoardById = async (req, res) => {
   const { boardId } = req.params;
   const board = await Board.findById(boardId);
   if (!board) throw HttpError(404);
-
-  const bgrURL = await Background.find({ bgrId: board.background });
 
   const columns = await Column.find({ parentBoard: board._id });
   let columnsWithCards = [];
@@ -31,7 +28,6 @@ const getBoardById = async (req, res) => {
 
   res.json({
     board,
-    bgrURL,
     columns: columnsWithCards,
   });
 };

@@ -6,6 +6,7 @@ const getCurrent = require("./getCurrent");
 const logout = require("./logout");
 const updateTheme = require("./updateTheme");
 const updateUser = require("./updateUser");
+const createHelpMail = require("./needHelp");
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -14,4 +15,5 @@ module.exports = {
   logout: ctrlWrapper(logout),
   updateTheme: ctrlWrapper(updateTheme),
   updateUser: ctrlWrapper(updateUser),
+  createHelpMail: ctrlWrapper(createHelpMail),
 };

@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { handleMongooseError } = require("../helpers");
+const  handleMongooseError  = require("../helpers/handleMongooseError.js");
 const Joi = require("joi");
 
 const emailRegexp = /^[a-zA-Z0-9.!#$%&’*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/;
@@ -28,10 +28,6 @@ const userSchema = new Schema(
       minlength: 8,
       maxLength: 64,
       required: [true, "Set password for user"],
-    },
-    token: {
-      type: String,
-      default: "",
     },
     avatarURL: {
       type: String,

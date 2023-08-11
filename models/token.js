@@ -15,4 +15,8 @@ const tokenSchema = new Schema(
 
 const Token = model("token", tokenSchema);
 
+const refreshSchema = Joi.object({
+  refreshToken: Joi.string().required(),
+})
+
 module.exports = Token;

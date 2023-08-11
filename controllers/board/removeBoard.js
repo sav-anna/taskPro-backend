@@ -5,6 +5,14 @@ const { HttpError } = require("../../helpers");
 
 const removeBoard = async (req, res) => {
   const { boardId } = req.params;
+  const { _id } = req.user;
+
+  const board = await Board.findOne({ _id: boardId }, "owner");
+
+  if (_id.valueOf() !== board.owner.valueOf()) {
+    throw HttpError(403, "You have no permission to delete this Board");
+  }
+
   const result = await Board.findByIdAndRemove(boardId);
   if (!result) {
     throw HttpError(404);
@@ -18,7 +26,8 @@ const removeBoard = async (req, res) => {
   }
 
   res.json({
-    message: `Board ${boardId} successfully deleted`,
+    // message: `Board ${boardId} successfully deleted`,
+    result,
   });
 };
 

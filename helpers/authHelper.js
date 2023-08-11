@@ -3,7 +3,7 @@ const {REFRESH_SECRET_KEY}= process.env;
 const { tokens } = require('../config/app').jwt;
 const { nanoid } = require("nanoid");
 const jwt = require("jsonwebtoken");
-const Token = require('../models/token');
+const { Token } = require('../models/token');
 
 const generateAccessToken = (userId) => {   
   const payload = {

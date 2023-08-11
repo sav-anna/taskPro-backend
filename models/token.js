@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const Joi = require("joi");
 
 const tokenSchema = new Schema(
   {
@@ -19,4 +20,7 @@ const refreshSchema = Joi.object({
   refreshToken: Joi.string().required(),
 })
 
-module.exports = Token;
+module.exports = {
+Token,
+refreshSchema
+};

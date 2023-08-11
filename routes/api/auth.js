@@ -2,6 +2,7 @@ const express = require("express");
 const ctrl = require("../../controllers/auth");
 const { validateBody, authenticate, uploadCloud } = require("../../middlewares");
 const { schemas } = require("../../models/user");
+const { refreshSchema } = require("../../models/token");
 const { needHelpSchemas } = require("../../models/needHelp");
 
 const router = express.Router();
@@ -9,7 +10,7 @@ const router = express.Router();
 router.post("/register", validateBody(schemas.registerSchema), ctrl.register);
 
 router.post("/login", validateBody(schemas.loginSchema), ctrl.login);
-router.post("/refreshToken", ctrl.refreshTokens);
+router.post("/refreshToken", validateBody(refreshSchema), ctrl.refreshTokens);
 
 router.get("/current", authenticate, ctrl.getCurrent);
 

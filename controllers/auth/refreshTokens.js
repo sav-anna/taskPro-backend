@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Token = require("../../models/token");
+const { Token } = require("../../models/token");
 const { HttpError } = require("../../helpers");
 const authHelper = require('../../helpers/authHelper');
 
@@ -17,7 +17,7 @@ const refreshTokens = async (req,res) => {
 
         const token = await Token.findOne({tokenId: payload.id});
         if(token===null){
-             throw HttpError(400, "Invalid token");
+             throw HttpError(403, "Invalid token");
         };
         const newTokens = await authHelper.updateTokens(token.userId);
       return  res.status(200).json(newTokens);

@@ -1,4 +1,4 @@
-const Token  = require("../../models/token");
+const { Token }  = require("../../models/token");
 const logout = async (req, res) => {
   const { user } = req;
 

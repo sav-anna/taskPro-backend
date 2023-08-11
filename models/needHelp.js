@@ -21,7 +21,7 @@ const addSchema = Joi.object({
   message: Joi.string().required(),
 });
 
-const schemas = {
+const needHelpSchemas = {
   addSchema,
 };
 
@@ -31,5 +31,5 @@ const needHelpMail = model("help", needHelpSchema);
 
 module.exports = {
   needHelpMail,
-  schemas,
+  needHelpSchemas,
 };

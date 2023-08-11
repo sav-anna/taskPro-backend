@@ -16,12 +16,11 @@ const login = async (req, res) => {
     throw HttpError(401, "Email or password invalid");
   };
  
-  const {accessToken, refreshToken} = await authHelper.updateTokens(user._id);
+  const tokens = await authHelper.updateTokens(user._id);
 
   res.json({
     id: user._id,
-    token: accessToken,
-    refreshToken,
+   tokens,
     theme: user.theme,
     avatarURL: user.avatarURL,
     name: user.name,

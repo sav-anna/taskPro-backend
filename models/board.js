@@ -61,7 +61,7 @@ const addBoardSchema = Joi.object({
 });
 
 const editBoardSchema = Joi.object({
-  title: Joi.string().required().messages({
+  title: Joi.string().messages({
     "any.required": "Missing field title",
   }),
   icon: Joi.string()
@@ -75,7 +75,7 @@ const editBoardSchema = Joi.object({
       "colors",
       "hexagon"
     )
-    .required()
+
     .messages({
       "any.only":
         'Can only be "project", "star", "loading", "puzzle-piece", "container", "lightning", "colors", "hexagon"',

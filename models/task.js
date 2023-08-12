@@ -28,6 +28,8 @@ const taskSchema = new Schema(
       ref: "column",
       required: [true, "Parent Column id is required"],
     },
+    // orderForCurrentColumn: { type: Array, default: [] },
+    // orderForNewColumn: { type: Array, default: [] },
   },
   { versionKey: false }
 );
@@ -63,6 +65,8 @@ const updateParentColumnSchema = Joi.object({
   parentColumn: Joi.string().required().messages({
     "any.required": "Missing field parentColumn",
   }),
+  orderForCurrentColumn: Joi.array(),
+  orderForNewColumn: Joi.array(),
 });
 
 const schemas = {

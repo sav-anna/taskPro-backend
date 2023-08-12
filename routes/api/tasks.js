@@ -27,7 +27,7 @@ router.put(
 router.delete("/:taskId", authenticate, ctrl.removeTask);
 
 router.patch(
-  "/:taskId/owner/:columnId",
+  "/:taskId",
   authenticate,
   validateBody(schemas.updateParentColumnSchema),
   ctrl.updateTaskOwner

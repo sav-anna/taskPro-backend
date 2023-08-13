@@ -150,7 +150,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserUpdateResponse"
+                  "$ref": "#/components/schemas/UserCurrentResponse"
                 }
               }
             }
@@ -252,6 +252,54 @@
           },
           "404": {
             "description": "Not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/auth/refreshToken": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "RefreshToken",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "RefreshToken of current user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1Ni..."
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "accessToken": "eyJhbGciOiJIUzI1NiIsI...",
+                    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token"
+          },
+          "401": {
+            "description": "Refresh token expired"
           },
           "500": {
             "description": "Server error"
@@ -498,7 +546,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Board successfully deleted"
+            "description": "Board successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteBoard"
+                }
+              }
+            }
           },
           "401": {
             "description": "Not authorized"
@@ -597,7 +652,7 @@
         "tags": [
           "Columns"
         ],
-        "summary": "Update board",
+        "summary": "Update column",
         "security": [
           {
             "Bearer": []
@@ -671,7 +726,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Column successfully deleted"
+            "description": "Column successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColumnRemoveResponse"
+                }
+              }
+            }
           },
           "401": {
             "description": "Not authorized"
@@ -749,7 +811,7 @@
         ],
         "description": "The current user must have a token.",
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -845,7 +907,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Task successfully deleted"
+            "description": "Task successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            }
           },
           "401": {
             "description": "Not authorized"
@@ -856,7 +925,7 @@
         }
       }
     },
-    "/tasks/{taskId}/owner/{columnId}": {
+    "/tasks/{_id}/": {
       "patch": {
         "tags": [
           "Tasks"
@@ -869,19 +938,10 @@
         ],
         "parameters": [
           {
-            "name": "taskId",
+            "name": "_id",
             "in": "path",
             "required": true,
             "description": "Id of the current task",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "columnId",
-            "in": "path",
-            "required": true,
-            "description": "Id of the current column",
             "schema": {
               "type": "string"
             }
@@ -895,7 +955,9 @@
               "schema": {
                 "type": "object",
                 "example": {
-                  "parentColumn": "64d13c39a01425f5d9c312ab"
+                  "parentColumn": "64d13c39a01425f5d9c312ab",
+                  "orderForCurrentColumn": [],
+                  "orderForNewColumn": []
                 }
               }
             }
@@ -903,7 +965,7 @@
         },
         "responses": {
           "201": {
-            "description": "Owner successfully updated",
+            "description": "Task Order was successfully updated",
             "content": {
               "application/json": {
                 "schema": {
@@ -1004,6 +1066,10 @@
             "type": "string",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Y2JkZGU2ZjA4NDViZDA2ZWMzNWIwNCIsImlhdCI6MTY5MTA4ODkxOSwiZXhwIjoxNjkxMTcxNzE5fQ."
           },
+          "refreshToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ8.eyJpZCI6IjY0Y5JkZGU2ZjA4NDViZDA2ZWMzNWIwNCIsImlhdCI6MTY5MTA4ODkxOSwiZXhwIjoxNjkxMTcxNzE5fQ."
+          },
           "theme": {
             "type": "string",
             "example": "Dark"
@@ -1044,9 +1110,50 @@
           }
         }
       },
+      "UserCurrentResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "Successfully updated"
+          },
+          "code": {
+            "type": "string",
+            "example": 200
+          },
+          "_id": {
+            "type": "string",
+            "example": "64cfbbf026d09de4371c56c7"
+          },
+          "name": {
+            "type": "string",
+            "example": "Username"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          },
+          "theme": {
+            "type": "string",
+            "example": "dark"
+          },
+          "avatarURL": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/taskpro/image/upload/..."
+          }
+        }
+      },
       "UserUpdateResponse": {
         "type": "object",
         "properties": {
+          "status": {
+            "type": "string",
+            "example": "Successfully updated"
+          },
+          "code": {
+            "type": "number",
+            "example": 200
+          },
           "_id": {
             "type": "string",
             "example": "64cfbbf026d09de4371c56c7"
@@ -1094,7 +1201,7 @@
               "_id": "111a1ea1113bc1ba1a1c896c",
               "title": "New Board",
               "icon": "star",
-              "background": 0,
+              "background": "0",
               "columnOrder": [],
               "owner": "64d3a58f9f0a3cc81960deac"
             },
@@ -1102,7 +1209,7 @@
               "_id": "222a0ea22b2bc2ba2c2d899c",
               "title": "Work Board",
               "icon": "project",
-              "background": 1,
+              "background": "1",
               "columnOrder": [],
               "owner": "64d3a58f9f0a3cc81960deac"
             }
@@ -1116,11 +1223,10 @@
             "_id": "111a1ea1113bc1ba1a1c896c",
             "title": "New Board",
             "icon": "star",
-            "background": 1,
+            "background": "1",
             "columnOrder": [],
             "owner": "64d3a58f9f0a3cc81960deac"
           },
-          "bgrURL": [],
           "columns": []
         }
       },
@@ -1217,6 +1323,22 @@
           }
         }
       },
+      "DeleteBoard": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "example": {
+              "_id": "111a1ea1113bc1ba1a1c896c",
+              "title": "New Board",
+              "icon": "star",
+              "background": "0",
+              "columnOrder": [],
+              "owner": "64d3a58f9f0a3cc81960deac"
+            }
+          }
+        }
+      },
       "AddColumn": {
         "type": "object",
         "required": [
@@ -1247,12 +1369,8 @@
           "taskOrder": {
             "type": "array",
             "items": {
-              "properties": {
-                "_id": {
-                  "type": "object",
-                  "example": "64cfc2efca899b99cc4b3420"
-                }
-              }
+              "type": "string",
+              "example": "64cfc2efca899b99cc4b3000"
             }
           },
           "_id": {
@@ -1262,6 +1380,43 @@
         }
       },
       "ColumnResponseById": {
+        "type": "object",
+        "properties": {
+          "column": {
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "64d13c39a01425f5d9c312ab"
+              },
+              "title": {
+                "type": "string",
+                "example": "New Column"
+              },
+              "parentBoard": {
+                "type": "string",
+                "example": "64cff474d317457be0a3fa94"
+              },
+              "taskOrder": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "64cfc2efca899b99cc4b3000"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdateColumn": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Work column"
+          }
+        }
+      },
+      "ColumnRemoveResponse": {
         "type": "object",
         "properties": {
           "_id": {
@@ -1279,22 +1434,9 @@
           "taskOrder": {
             "type": "array",
             "items": {
-              "properties": {
-                "_id": {
-                  "type": "object",
-                  "example": "64cfc2efca899b99cc4b3420"
-                }
-              }
+              "type": "string",
+              "example": "64cfc2efca899b99cc4b3000"
             }
-          }
-        }
-      },
-      "UpdateColumn": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "Work column"
           }
         }
       },

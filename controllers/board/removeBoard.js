@@ -25,10 +25,7 @@ const removeBoard = async (req, res) => {
     await Column.deleteMany({ parentBoard: boardId });
   }
 
-  res.json({
-    // message: `Board ${boardId} successfully deleted`,
-    result,
-  });
+  res.json(result);
 };
 
 module.exports = removeBoard;

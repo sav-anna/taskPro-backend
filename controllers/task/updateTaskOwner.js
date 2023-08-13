@@ -1,28 +1,47 @@
 const { Task } = require("../../models/task");
+const { Column } = require("../../models/column");
 
 const { HttpError } = require("../../helpers");
 
-// const updateTaskOwner = async (req, res) => {
-//   const { taskId, columnId } = req.params;
-//   const result = await Task.findByIdAndUpdate(
-//     taskId,
-//     { owner: columnId },
-//     {
-//       new: true,
-//     }
-//   );
-//   if (!result) throw HttpError(404);
-//   res.json(result);
-// };
-
 const updateTaskOwner = async (req, res) => {
   const { taskId } = req.params;
-  const result = await Task.findByIdAndUpdate(taskId, req.body, { new: true });
-  if (!result) {
-    throw HttpError(404, `Task ${taskId} not found`);
+  const { parentColumn, orderForCurrentColumn, orderForNewColumn } = req.body;
+
+  const task = await Task.findOne({ _id: taskId }, "parentColumn");
+  const currentOwnerId = task.parentColumn.valueOf();
+  const newOwnerId = parentColumn;
+
+  console.log(currentOwnerId);
+  console.log(newOwnerId);
+
+  const currentColumn = await Column.findByIdAndUpdate(
+    { _id: currentOwnerId },
+    { taskOrder: orderForCurrentColumn },
+    { new: true }
+  );
+  if (!currentColumn) throw HttpError(404);
+
+  if (newOwnerId !== currentOwnerId) {
+    const updatedTask = await Task.findByIdAndUpdate(
+      taskId,
+      { parentColumn: newOwnerId },
+      { new: true }
+    );
+    const newColumn = await Column.findByIdAndUpdate(
+      { _id: newOwnerId },
+      { taskOrder: orderForNewColumn },
+      { new: true }
+    );
+
+    if (!updatedTask || !newColumn) throw HttpError(404);
   }
 
-  res.status(201).json(result);
+  // const result = await Task.findByIdAndUpdate(taskId, req.body, { new: true });
+  // if (!result) {
+  //   throw HttpError(404, `Task ${taskId} not found`);
+  // }
+
+  res.status(200).json({ message: "Successfull Drag and Drop" });
 };
 
 module.exports = updateTaskOwner;

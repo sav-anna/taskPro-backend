@@ -18,7 +18,7 @@ const removeColumn = async (req, res) => {
     throw HttpError(404, "Column not found");
   }
   await Board.findByIdAndUpdate(column.parentBoard, {
-    $pull: { columnOrder: column._id },
+    $pull: { columnOrder: columnId },
   });
   const result = await Column.findByIdAndRemove(columnId);
   if (!result) {
@@ -30,7 +30,7 @@ const removeColumn = async (req, res) => {
     await Task.deleteMany({ parentColumn });
   }
 
-  res.json({ message: `Column ${columnId} successfully deleted` });
+  res.json(result);
 };
 
 module.exports = removeColumn;

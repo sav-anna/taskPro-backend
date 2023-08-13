@@ -50,10 +50,10 @@ const registerSchema = Joi.object({
   password: Joi.string().pattern(passwordRegexp).min(8).max(64).required(),
 });
 const updateUserSchema = Joi.object({
-  name: Joi.string().pattern(nameRegexp).min(2).max(32),
-  email: Joi.string().pattern(emailRegexp),
-  password: Joi.string().pattern(passwordRegexp).min(8).max(64),
-  avatarUrl: Joi.string(),
+  name: Joi.string().empty("").pattern(nameRegexp).min(2).max(32),
+  email: Joi.string().empty("").pattern(emailRegexp),
+  password: Joi.string().empty("").pattern(passwordRegexp).min(8).max(64),
+  avatarUrl: Joi.string().empty(""),
 });
 
 const loginSchema = Joi.object({

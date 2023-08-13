@@ -1,11 +1,11 @@
 const { Schema, model } = require("mongoose");
-const  handleMongooseError  = require("../helpers/handleMongooseError.js");
+const handleMongooseError = require("../helpers/handleMongooseError.js");
 const Joi = require("joi");
 
-const emailRegexp = /^[a-zA-Z0-9.!#$%&’*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/;
-const nameRegexp =/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+const emailRegexp =
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/;
+const nameRegexp = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
 const passwordRegexp = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
-
 
 const userSchema = new Schema(
   {
@@ -53,7 +53,7 @@ const updateUserSchema = Joi.object({
   name: Joi.string().pattern(nameRegexp).min(2).max(32),
   email: Joi.string().pattern(emailRegexp),
   password: Joi.string().pattern(passwordRegexp).min(8).max(64),
-  avatarUrl: Joi.string()
+  avatarUrl: Joi.string(),
 });
 
 const loginSchema = Joi.object({
@@ -62,14 +62,14 @@ const loginSchema = Joi.object({
 });
 
 const updateTheme = Joi.object({
-  theme: Joi.string().valueOf("Dark", "Light", "Violet").required(),
+  theme: Joi.string().valueOf("dark", "light", "violet").required(),
 });
 
 const schemas = {
   registerSchema,
   loginSchema,
   updateTheme,
-  updateUserSchema
+  updateUserSchema,
 };
 
 const User = model("user", userSchema);

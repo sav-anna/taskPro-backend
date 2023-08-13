@@ -13,5 +13,5 @@ https://oleksiifedorenko.github.io/goit-team-03-front/welcome
 ## About API
 
 Our backend is built on Node.js (version 12 or higher), using the Express.js framework to implement the API and Mongoose to interact with the MongoDB database.
-The backend documentation is described on the site: https://taskpro-m75b.onrender.com.
+The backend documentation is described on the site: https://taskpro-m75b.onrender.com/api-docs
 ![About API](./public/api.png)

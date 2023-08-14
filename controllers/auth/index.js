@@ -8,6 +8,7 @@ const refreshTokens = require("./refreshTokens");
 const updateTheme = require("./updateTheme");
 const updateUser = require("./updateUser");
 const createHelpMail = require("./needHelp");
+const googleAuth = require("./googleAuth");
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -20,5 +21,5 @@ module.exports = {
   refreshTokens: ctrlWrapper(refreshTokens),
 
   createHelpMail: ctrlWrapper(createHelpMail),
-
+  googleAuth: ctrlWrapper(googleAuth),
 };

@@ -41,7 +41,7 @@ const updateTaskOwner = async (req, res) => {
   //   throw HttpError(404, `Task ${taskId} not found`);
   // }
 
-  res.status(200).json({ message: "Successfull Drag and Drop" });
+  res.status(200).json({ message: "Task Order was successfully updated" });
 };
 
 module.exports = updateTaskOwner;

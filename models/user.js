@@ -4,7 +4,7 @@ const Joi = require("joi");
 
 const emailRegexp =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/;
-const nameRegexp = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+// const nameRegexp = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
 const passwordRegexp = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
 
 const userSchema = new Schema(
@@ -13,7 +13,7 @@ const userSchema = new Schema(
       type: String,
       minlength: 2,
       maxLength: 32,
-      match: nameRegexp,
+      // match: nameRegexp,
       required: [true, "Set name for contact"],
     },
     email: {
@@ -45,12 +45,14 @@ const userSchema = new Schema(
 userSchema.post("save", handleMongooseError);
 
 const registerSchema = Joi.object({
-  name: Joi.string().pattern(nameRegexp).min(2).max(32).required(),
+  // name: Joi.string().pattern(nameRegexp).min(2).max(32).required(),
+  name: Joi.string().min(2).max(32).required(),
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().pattern(passwordRegexp).min(8).max(64).required(),
 });
 const updateUserSchema = Joi.object({
-  name: Joi.string().empty("").pattern(nameRegexp).min(2).max(32),
+  // name: Joi.string().empty("").pattern(nameRegexp).min(2).max(32),
+  name: Joi.string().empty("").min(2).max(32),
   email: Joi.string().empty("").pattern(emailRegexp),
   password: Joi.string().empty("").pattern(passwordRegexp).min(8).max(64),
   avatarUrl: Joi.string().empty(""),

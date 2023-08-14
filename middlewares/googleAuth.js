@@ -10,7 +10,7 @@ const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL } = process.env;
 const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: `${BASE_URL}/api/auth/google/callback`,
+  callbackURL: `${BASE_URL}/auth/google/callback`,
   passReqToCallback: true,
 };
 

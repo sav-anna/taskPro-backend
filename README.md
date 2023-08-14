@@ -11,7 +11,7 @@ This is the TaskPro API backend, which is developed for the [TaskPro](https://ol
 
 ## About API
 
-\*\* Our backend is built on:
+### Our backend is built on:
 
 - Node.js (version 12 or higher)
 - Express.js

@@ -343,6 +343,28 @@
         }
       }
     },
+    "/auth/google": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Google authorization",
+        "parameters": [],
+        "responses": {
+          "302": {
+            "description": "Successful (redirect to front-end with access Token)"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        }
+      }
+    },
     "/boards": {
       "get": {
         "tags": [

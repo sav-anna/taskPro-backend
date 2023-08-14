@@ -1,7 +1,6 @@
 # TaskPro-backend API
 
-This is the TaskPro API backend, which is developed for the TaskPro web application:
-https://oleksiifedorenko.github.io/goit-team-03-front/welcome
+This is the TaskPro API backend, which is developed for the [TaskPro](https://oleksiifedorenko.github.io/goit-team-03-front/welcome) web application:
 
 ## The developers of our backend are
 
@@ -12,6 +11,15 @@ https://oleksiifedorenko.github.io/goit-team-03-front/welcome
 
 ## About API
 
-Our backend is built on Node.js (version 12 or higher), using the Express.js framework to implement the API and Mongoose to interact with the MongoDB database.
-The backend documentation is described on the site: https://taskpro-m75b.onrender.com/api-docs
+\*\* Our backend is built on:
+
+- Node.js (version 12 or higher)
+- Express.js
+- Cloudinary
+- Google (passport)
+- Mongoose to interact with the MongoDB database.
+
+The backend [documentation](https://taskpro-m75b.onrender.com/api-docs)
+was using a package 'swagger-ui-express'
+
 ![About API](./public/api.png)

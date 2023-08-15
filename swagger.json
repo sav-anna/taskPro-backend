@@ -274,7 +274,7 @@
               "schema": {
                 "type": "string",
                 "example": {
-                  "token": "eyJhbGciOiJIUzI1Ni..."
+                  "refreshToken": "eyJhbGciOiJIUzI1Ni..."
                 }
               }
             }

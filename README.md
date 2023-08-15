@@ -4,10 +4,10 @@ This is the TaskPro API backend, which is developed for the [TaskPro](https://ol
 
 ## The developers of our backend are
 
-- Anna (https://github.com/sav-anna);
-- Tetiana (https://github.com/teti-ruzh);
-- Anastasiia (https://github.com/n-ruzhik);
-- Victor (https://github.com/chemvic).
+- [Anna](https://github.com/sav-anna)
+- [Tetiana](https://github.com/teti-ruzh)
+- [Anastasiia](https://github.com/n-ruzhik)
+- [Victor](https://github.com/chemvic)
 
 ## About API
 

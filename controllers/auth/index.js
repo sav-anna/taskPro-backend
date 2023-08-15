@@ -17,9 +17,7 @@ module.exports = {
   logout: ctrlWrapper(logout),
   updateTheme: ctrlWrapper(updateTheme),
   updateUser: ctrlWrapper(updateUser),
-
   refreshTokens: ctrlWrapper(refreshTokens),
-
   createHelpMail: ctrlWrapper(createHelpMail),
   googleAuth: ctrlWrapper(googleAuth),
 };

@@ -1,5 +1,4 @@
 const { needHelpMail } = require("../../models/needHelp");
-const { ctrlWrapper } = require("../../helpers");
 const sendEmail = require("../../helpers/needHelp");
 
 const createHelpMail = async (req, res) => {

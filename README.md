@@ -17,7 +17,9 @@ This is the TaskPro API backend, which is developed for the [TaskPro](https://ol
 - Express.js
 - Cloudinary
 - Google (passport)
-- Mongoose to interact with the MongoDB database.
+- Sendgrid (sendgrid/mail)
+- Nanoid
+- Mongoose to interact with the MongoDB database and other...
 
 The backend [documentation](https://taskpro-m75b.onrender.com/api-docs)
 was using a package 'swagger-ui-express'

@@ -3,14 +3,6 @@ const { Column } = require("../../models/column");
 
 const { HttpError } = require("../../helpers");
 
-// const removeTask = async (req, res) => {
-//   const { taskId } = req.params;
-//   const result = await Task.findByIdAndRemove(taskId);
-//   if (!result) throw HttpError(404);
-
-//   res.status(204).json({ message: `Task ${taskId} successfully deleted` });
-// };
-
 const removeTask = async (req, res) => {
   const { taskId } = req.params;
   const task = await Task.findById(taskId);

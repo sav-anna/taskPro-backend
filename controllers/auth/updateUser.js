@@ -26,9 +26,8 @@ const updateUser = async (req, res) => {
   }
   if (req.file) {
     if (avatarURL !== "") {
-      const urlSliced = avatarURL.slice(62, avatarURL.length - 4);
-      console.log(urlSliced);
-      await cloudinary.uploader.destroy(urlSliced, {
+      const urlAvatarSliced = avatarURL.slice(62, avatarURL.length - 4);
+      await cloudinary.uploader.destroy(urlAvatarSliced, {
         invalidate: true,
         resource_type: "image",
       });

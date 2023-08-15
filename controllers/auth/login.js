@@ -17,7 +17,7 @@ const login = async (req, res) => {
 
   res.json({
     id: user._id,
-    token: accessToken,
+    accessToken,
     refreshToken,
     theme: user.theme,
     avatarURL: user.avatarURL,

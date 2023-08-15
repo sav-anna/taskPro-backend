@@ -7,7 +7,6 @@ const createHelpMail = async (req, res) => {
 
   const supportMail = {
     to: "taskpro.project@gmail.com",
-    // to: "folix25060@royalka.com",
     subject: `Support request from ${email}`,
     html: `<p>${message}</p>`,
   };

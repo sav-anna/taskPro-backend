@@ -6,7 +6,11 @@ const { HttpError } = require("../../helpers");
 const addColumn = async (req, res) => {
   const { parentBoard } = req.body;
   const result = await Column.create({ ...req.body });
-  await Board.findByIdAndUpdate(parentBoard, { $push: { columnOrder: result._id } }, { safe: true, upsert: true, new: true });
+  await Board.findByIdAndUpdate(
+    parentBoard,
+    { $push: { columnOrder: result._id.valueOf() } },
+    { safe: true, upsert: true, new: true }
+  );
 
   res.status(201).json(result);
 };

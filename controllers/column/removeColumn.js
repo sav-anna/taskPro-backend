@@ -11,7 +11,7 @@ const removeColumn = async (req, res) => {
     throw HttpError(404, "Column not found");
   }
   await Board.findByIdAndUpdate(column.parentBoard, {
-    $pull: { columnOrder: column._id },
+    $pull: { columnOrder: column._id.valueOf() },
   });
   const result = await Column.findByIdAndRemove(columnId);
   if (!result) {
